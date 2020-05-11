@@ -84,19 +84,16 @@ class Bond:
         return self.doAction(deviceId, 
                              Actions.SET_BRIGHTNESS,
                              {"argument": brightness})
-
+    
     def startDimmer(self, deviceId):
-        return self.doAction(deviceId, 
-                             Actions.START_DIMMER)
-
+        return self.doAction(deviceId, Actions.START_DIMMER)
+        
     def startUpLightDimmer(self, deviceId):
-        return self.doAction(deviceId,
-                             Actions.START_UP_LIGHT_DIMMER)
-
+        return self.doAction(deviceId, Actions.START_UP_LIGHT_DIMMER)
+        
     def startDownLightDimmer(self, deviceId):
-        return self.doAction(deviceId, 
-                             Actions.START_DOWN_LIGHT_DIMMER)
-
+        return self.doAction(deviceId, Actions.START_DOWN_LIGHT_DIMMER)
+        
     # Relating to Fireplace (FP)
     def setFlame(self, deviceId, flame=3):
         return self.doAction(deviceId,
@@ -115,7 +112,7 @@ class Bond:
 
     def doAction(self, deviceId, action, payload={}):
         url = f"http://{self.bondIp}/v2/devices/{deviceId}/actions/{action}"
-        headers = {"BOND-Token": self.bondToken}
+        headers = {'BOND-Token': self.bondToken}
 
         r = requests.put(url, headers=headers, json=payload)
         if r.status_code < 200 or r.status_code > 299:
@@ -131,32 +128,32 @@ class Bond:
 
     def getDeviceIds(self):
         url = f"http://{self.bondIp}/v2/devices"
-        headers = {"BOND-Token": self.bondToken}
+        headers = {'BOND-Token': self.bondToken}
 
         r = requests.get(url, headers=headers)
         devices = []
         for key in r.json():
-            if key != "_":
+            if (key != '_'):
                 devices.append(key)
         return devices
 
     def getDevice(self, deviceId):
         url = f"http://{self.bondIp}/v2/devices/{deviceId}"
-        headers = {"BOND-Token": self.bondToken}
+        headers = {'BOND-Token': self.bondToken}
 
         r = requests.get(url, headers=headers)
         return r.json()
 
     def getProperties(self, deviceId):
         url = f"http://{self.bondIp}/v2/devices/{deviceId}/properties/"
-        headers = {"BOND-Token": self.bondToken}
+        headers = {'BOND-Token': self.bondToken}
 
         r = requests.get(url, headers=headers)
         return r.json()
 
     def getDeviceState(self, deviceId):
         url = f"http://{self.bondIp}/v2/devices/{deviceId}/state"
-        headers = {"BOND-Token": self.bondToken}
+        headers = {'BOND-Token': self.bondToken}
 
         r = requests.get(url, headers=headers)
         return r.json()
